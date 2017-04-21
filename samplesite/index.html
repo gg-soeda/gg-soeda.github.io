@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>My Profile</title>
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/main.css" rel="stylesheet">
+    <link href="assets/css/plus.css" rel="stylesheet">
+
+    <!-- 以下にJavaScriptを記述 -->
+    <!-- jQueryを利用するため、jQueryを読み込み -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script lang="javascript">
+    <!--
+    // jQuery及びJavaScriptの定義エリア
+    $(document).ready(
+        function() {
+          // 真ん中のスマホのクリック処理を設定
+          $("#clickable").click(
+            	function(){
+                // 連続起動を防ぐため、フォーカスを画像からフローティングウィンドウへ
+                $(this).blur() ;
+                // 既に起動中の場合は、何もせずに離脱
+                if($("#modal-overlay")[0]) return false ;
+
+                // アニメーション停止（スマホの振動を止める）
+                $('#calling').css("animation-play-state", "paused");
+
+                // ウィンドウ操作
+                //オーバーレイ用のHTMLコードを、bodyの最後に生成する（フローティングウィンドウの背景を薄暗くするため）
+                $("body").append('<div id="modal-overlay"></div>');
+
+                //modal-overlayをフェードインさせる（フローティングウィンドウの背景が薄暗くなる）
+                $("#modal-overlay").fadeIn("slow");
+
+                // フローティングウィンドウの位置を計算。センターに来るように調整。
+                centeringModalSyncer();
+
+                // modal-contentをフェードインさせる。（フローティングウィンドウを表示）
+                $("#modal-content").fadeIn("slow");
+                // iframeのエリアを表示（message.htmlを読み込むエリア）
+                $("#rollframe").show();
+
+                // iframeの中身をリロード（起動毎に最初からスクロールする様に）
+                $("#rollframe").attr("src", $("#rollframe").attr("src"));
+
+                // 追加したmodal-overlayへ処理を追加
+                // modal-overlayと、modal-closeのクリックイベントを登録
+                $("#modal-overlay,#modal-close").unbind().click(function(){
+                  // modal-overlayとmodal-closeをフェードアウトする
+                  $("#modal-content,#modal-overlay").fadeOut("slow",function(){
+                    // アニメーション再開（スマホが再度振動する様に設定）
+                    $('#calling').css("animation-play-state", "running");
+                    // iframe非表示
+                    $("#rollframe").hide();
+
+                  	//フェードアウト後、[#modal-overlay]をHTML(DOM)上から削除
+                  	$("#modal-overlay").remove();
+                  });
+                });
+
+            	}
+          );
+        }
+    );
+
+    // フローティングウィンドウをセンターに寄せる
+    function centeringModalSyncer(){
+
+      // 画面の幅を取得し、wに格納
+      var w = $(window).width();
+
+      // 画面の高さを取得し、hに格納
+      var h = $(window).height();
+
+      // modal-content（フローティングウィンドウ）の幅を取得し、cwに格納
+      var cw = $("#modal-content").outerWidth();
+
+      // modal-content（フローティングウィンドウ）の高さを取得し、chに格納
+      var ch = $("#modal-content").outerHeight();
+
+      // modal-content（フローティングウィンドウ）を真ん中に配置するのに、左端から何ピクセル離せばいいか？を計算
+      var pxleft = ((w - cw)/2);
+
+      // modal-content（フローティングウィンドウ）を真ん中に配置するのに、上部から何ピクセル離せばいいか？を計算
+      var pxtop = ((h - ch)/2);
+
+      // modal-content（フローティングウィンドウ）のCSSにleftの値を設定
+      $("#modal-content").css({"left": pxleft + "px"});
+
+      // modal-content（フローティングウィンドウ）のCSSにtopの値を設定
+      $("#modal-content").css({"top": pxtop + "px"});
+
+    }
+
+    -->
+    </script>
+  </head>
+
+  <body>
+
+    <!-- 隠しウィンドウ（フローティングウィンドウ）部分 -->
+    <div id="modal-content">
+      <!-- message.htmlを読み込むためのiframe -->
+      <iframe id="rollframe" sandbox="allow-scripts" src="message.html"></iframe>
+      <p><a id="modal-close" class="button-link">閉じる</a></p>
+    </div>
+
+<!-- 上のメニューバーの部分です -->
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">GEEK JOB</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">ABOUT</a></li>
+            <li><a href="#">WORKS</a></li>
+            <li><a href="#">LIKE</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+<!-- ２．中身を充実させよう -->
+
+<!-- タイトル部分です -->
+	<div id="headerwrap">
+		<div class="container">
+			<div class="row centered">
+				<div class="col-lg-8 col-lg-offset-2">
+				<h1>My Profile</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- 紹介文の部分です -->
+	<div class="container w">
+		<div class="row centered">
+			<div class="col-lg-4">
+				<i class="fa fa-heart"></i>
+				<h4>Strong</h4>
+				<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even believable.</p>
+			</div>
+
+			<div class="col-lg-4">
+				<i class="fa fa-laptop"></i>
+				<h4>Works</h4>
+				<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even believable.</p>
+			</div>
+
+			<div class="col-lg-4">
+				<i class="fa fa-trophy"></i>
+				<h4>Like</h4>
+				<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even believable.</p>
+			</div>
+		</div>
+		<br>
+		<br>
+	</div>
+
+<!-- 画面下部のスマホの絵の部分です -->
+	<div id="dg">
+		<div class="container">
+			<div class="row centered">
+				<h4>TRY IT</h4>
+				<br>
+        <div class="col-lg-4">
+					<div class="tilt">
+					<img src="assets/img/p01.png" alt="">
+					</div>
+				</div>
+				<div class="col-lg-4">
+          <!--
+               1. 2番目のスマホからフローティングウィンドウを表示するため、
+                  divタグのidとclassを"calling"に変更
+               2. imgタグのidに"clickable"を追加
+          -->
+					<div id="calling" class="calling">
+    					<img id="clickable" src="assets/img/p02.png" alt="">
+					</div>
+				</div>
+        <div class="col-lg-4">
+					<div class="tilt">
+					<img src="assets/img/p03.png" alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<!-- ３．フッターの部分です -->
+
+<footer>
+	<div id="f">
+		<div class="container">
+			<div class="row centered">
+				<a href="#"><i class="fa fa-twitter"></i></a>
+        <a href="#"><i class="fa fa-facebook"></i></a>
+        <a href="#"><i class="fa fa-dribbble"></i></a>
+			</div>
+		</div>
+	</div>
+</footer>
+
+  </body>
+</html>
